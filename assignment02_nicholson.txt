@@ -1,0 +1,161 @@
+vagrant@data-science-toolbox:~$ ls
+assignment01_part_1_nicholson.txt  book        get-pip.py  Lecture04  Lecture06               numbered.txt  third.txt
+assignment01_part_2_nicholson.txt  file02.txt  Lecture03   Lecture05  my_folder_assignment01  room.txt
+vagrant@data-science-toolbox:~$ cd /vagrant
+vagrant@data-science-toolbox:/vagrant$ ls
+assignment01_part_1_nicholson.txt  assignment02.txt  imdb.xlsx              sampleFile.txt
+assignment01_part_2_nicholson.txt  file02.txt        myScriptJanuary24.txt  Vagrantfile
+vagrant@data-science-toolbox:/vagrant$ mv assignment02.txt ~/
+vagrant@data-science-toolbox:/vagrant$ cd ~
+vagrant@data-science-toolbox:~$ ls
+assignment01_part_1_nicholson.txt  book        Lecture03  Lecture06               room.txt
+assignment01_part_2_nicholson.txt  file02.txt  Lecture04  my_folder_assignment01  third.txt
+assignment02.txt                   get-pip.py  Lecture05  numbered.txt
+vagrant@data-science-toolbox:~$ cat -n assignment02.txt | head -n 10 | tail -n 6
+     5  5th line
+     6  6th line
+     7  Line after 6th
+     8  Line before 9th
+     9  9th line
+    10  10th line
+vagrant@data-science-toolbox:~$ tr 'oi' 'io' < assignment02.txt > output.txt
+vagrant@data-science-toolbox:~$ cat output.txt
+Thos os the forst lone
+Thos os the secind lone
+Thord lone
+Fiurth lone
+5th lone
+6th lone
+Lone after 6th
+Lone befire 9th
+9th lone
+10th lone
+11th lone
+vagrant@data-science-toolbox:~$ tr '[:lower:]' '[:upper:]' < assignment02.txt > upper.txt
+vagrant@data-science-toolbox:~$ cat upper.txt
+THIS IS THE FIRST LINE
+THIS IS THE SECOND LINE
+THIRD LINE
+FOURTH LINE
+5TH LINE
+6TH LINE
+LINE AFTER 6TH
+LINE BEFORE 9TH
+9TH LINE
+10TH LINE
+11TH LINE
+vagrant@data-science-toolbox:~$ grep -oE '\w+' assignment02.txt | sort | uniq -c | sort -nr | head -n 3
+      9 line
+      2 This
+      2 the
+vagrant@data-science-toolbox:~$ grep -oE '\w+' assignment02.txt | sort | uniq -c | sort -n | head -n 3
+      1 10th
+      1 11th
+      1 5th
+vagrant@data-science-toolbox:~$ grep -oE '\w{1}' assignment02.txt | sort | uniq -c | sort -nr | head -n 3
+     17 i
+     17 e
+     13 h
+vagrant@data-science-toolbox:~$ grep -E '^Th' assignment02.txt
+This is the first line
+This is the second line
+Third line
+vagrant@data-science-toolbox:~$ grep -E 'line$' assignment02.txt
+This is the first line
+This is the second line
+Third line
+Fourth line
+5th line
+6th line
+9th line
+10th line
+11th line
+vagrant@data-science-toolbox:~$ awk 'NR>=3&&NR<=7 {print $0}' assignment02.txt
+Third line
+Fourth line
+5th line
+6th line
+Line after 6th
+vagrant@data-science-toolbox:~$ awk 'NR>10 {print $0}' assignment02.txt
+11th line
+vagrant@data-science-toolbox:~$ awk '{if ((length($1) == 4) && (length($0) > 10)) print $2}' assignment02.txt
+is
+is
+after
+before
+vagrant@data-science-toolbox:~$ mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 38
+Server version: 5.5.59-0ubuntu0.14.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE assignment02;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE assignment02;
+Database changed
+mysql> CREATE TABLE Student (f_name VARCHAR(30), l_name VARCHAR(30), id CHAR(20), age INT);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DESC Student
+    -> ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| f_name | varchar(30) | YES  |     | NULL    |       |
+| l_name | varchar(30) | YES  |     | NULL    |       |
+| id     | char(20)    | YES  |     | NULL    |       |
+| age    | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Student ADD gender CHAR(1);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC Student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| f_name | varchar(30) | YES  |     | NULL    |       |
+| l_name | varchar(30) | YES  |     | NULL    |       |
+| id     | char(20)    | YES  |     | NULL    |       |
+| age    | int(11)     | YES  |     | NULL    |       |
+| gender | char(1)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Student DROP COLUMN gender;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC Student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| f_name | varchar(30) | YES  |     | NULL    |       |
+| l_name | varchar(30) | YES  |     | NULL    |       |
+| id     | char(20)    | YES  |     | NULL    |       |
+| age    | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Student MODIFY id CHAR(20) PRIMARY KEY;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> RENAME TABLE Student TO Students;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO Students VALUES('Jane', 'Doe', '12345', 21);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO Students VALUES('John', 'Smith', '12345', 20);
+ERROR 1062 (23000): Duplicate entry '12345' for key 'PRIMARY'

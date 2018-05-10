@@ -1,0 +1,56 @@
+Sarah Nicholson
+
+> use data210_assignment04
+switched to db data210_assignment04
+> db
+data210_assignment04
+> show collections
+> db.student.insert({"f_name":"Ben", "age":20})
+WriteResult({ "nInserted" : 1 })
+> db.student.remove({})
+WriteResult({ "nRemoved" : 1 })
+> db.student.insert([{"f_name":"Ben", "age":22}, {"f_name":"John", "age":24, "city":"Charleston"}, {"f_name":"Ann", "age":25, "city":"Charlotte"}, {"f_name":"Mary", "age":21, "city":"Charleston"}, {"f_name":"Susan", "age":20}])
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 5,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+> db.student.remove({"age":{$gt:23}})
+WriteResult({ "nRemoved" : 2 })
+> db.student.find()
+{ "_id" : ObjectId("5ac255fbbd338b8a52831168"), "f_name" : "Ben", "age" : 22 }
+{ "_id" : ObjectId("5ac255fbbd338b8a5283116b"), "f_name" : "Mary", "age" : 21, "city" : "Charleston" }
+{ "_id" : ObjectId("5ac255fbbd338b8a5283116c"), "f_name" : "Susan", "age" : 20 }
+> db.student.count()
+3
+> db.student.find({"age":{$lt:22}})
+{ "_id" : ObjectId("5ac255fbbd338b8a5283116b"), "f_name" : "Mary", "age" : 21, "city" : "Charleston" }
+{ "_id" : ObjectId("5ac255fbbd338b8a5283116c"), "f_name" : "Susan", "age" : 20 }
+> db.student.find({"age":{$gt:20}}, {"f_name": 1, "_id": 0})
+{ "f_name" : "Ben" }
+{ "f_name" : "Mary" }
+
+> db.student.find({"f_name": "Susan"}).toArray({"f_name": "Savannah"})
+[
+        {
+                "_id" : ObjectId("5ac255fbbd338b8a5283116c"),
+                "f_name" : "Susan",
+                "age" : 20
+        }
+]
+
+> db.student.update({"f_name": "Mary"}, {$set: {"f_name": "Emily"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.update({}, {$inc: {"age": 2}}, false, true)
+WriteResult({ "nMatched" : 3, "nUpserted" : 0, "nModified" : 3 })
+> db.student.update({"f_name": "Ben"}, {$set: {"courses": ["CSCI250", "DATA210"]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.update({"f_name": "Ben"}, {$push: {"courses": "CSCI230"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.update({"f_name": "Ben"}, {$pop: {"courses": -1}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })

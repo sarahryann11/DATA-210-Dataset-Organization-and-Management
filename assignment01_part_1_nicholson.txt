@@ -1,0 +1,63 @@
+Script started on Thu 01 Feb 2018 07:42:15 PM UTC
+vagrant@data-science-toolbox:~$ pwd
+/home/vagrant
+vagrant@data-science-toolbox:~$ ls
+assignment01_part_1_nicholson.txt  book  get-pip.py  Lecture03  Lecture04  Lecture05  Lecture06
+vagrant@data-science-toolbox:~$ mkdir my_folder_assignment01
+vagrant@data-science-toolbox:~$ mkdir my_folder_assignment01/inner_folder
+vagrant@data-science-toolbox:~$ cd my_folder_assignment01/inner_folder/
+vagrant@data-science-toolbox:~/my_folder_assignment01/inner_folder$ cat > file01.txt
+This is the first line
+This is the second line
+This is the third line
+vagrant@data-science-toolbox:~/my_folder_assignment01/inner_folder$ cat -n file01.txt
+     1  This is the first line
+     2  This is the second line
+     3  This is the third line
+vagrant@data-science-toolbox:~/my_folder_assignment01/inner_folder$ cat -n file01.txt > numbered.txt
+vagrant@data-science-toolbox:~/my_folder_assignment01/inner_folder$ cat file01.txt numbered.txt | head -n 4 > third.txt
+vagrant@data-science-toolbox:~/my_folder_assignment01/inner_folder$ wc -l third.txt
+4 third.txt
+vagrant@data-science-toolbox:~/my_folder_assignment01/inner_folder$ grep 'rst' third.txt | wc -l
+2
+vagrant@data-science-toolbox:~/my_folder_assignment01/inner_folder$ seq 0 2 100 > fourth.txt
+vagrant@data-science-toolbox:~/my_folder_assignment01/inner_folder$ rm f*
+vagrant@data-science-toolbox:~/my_folder_assignment01/inner_folder$ mv numbered.txt third.txt ~/
+vagrant@data-science-toolbox:~/my_folder_assignment01/inner_folder$ cd ~
+vagrant@data-science-toolbox:~$ rmdir my_folder_assignment01/inner_folder/
+vagrant@data-science-toolbox:~$ cat > room.txt
+Do not exit the room
+I am exiting the room
+Exit the room
+vagrant@data-science-toolbox:~$ grep -w 'exit' room.txt
+Do not exit the room
+vagrant@data-science-toolbox:~$ grep -wi 'exit' room.txt | wc -l
+2
+vagrant@data-science-toolbox:~$ grep 'exit' room.txt | wc -l
+2
+vagrant@data-science-toolbox:~$ grep -i 'exit' room.txt | wc -l
+3
+vagrant@data-science-toolbox:~$ seq 2 100 | grep '3'
+3
+13
+23
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+43
+53
+63
+73
+83
+93
+vagrant@data-science-toolbox:~$ exit
+exit
+
+Script done on Thu 01 Feb 2018 07:51:47 PM UTC
